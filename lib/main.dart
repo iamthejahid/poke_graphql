@@ -45,16 +45,16 @@ Future<void> main() async {
 
   container.read(themeProvider);
 
-  final String token = box.get(KStrings.token, defaultValue: '');
+  // final String token = box.get(KStrings.token, defaultValue: '');
 
-  NetworkHandler.instance
-    ..setup(baseUrl: APIRoute.BASE_URL, showLogs: false)
-    ..setToken(token);
+  // NetworkHandler.instance
+  //   ..setup(baseUrl: APIRoute.BASE_URL, showLogs: false)
+  //   ..setToken(token);
 
   NetworkHandlerGraphQL.instance
       .setup(baseUrl: 'https://graphql-pokemon2.vercel.app/');
 
-  Logger.d('token: $token');
+  // Logger.d('token: $token');
   runApp(
     ProviderScope(
       parent: container,
