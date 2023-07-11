@@ -42,3 +42,8 @@ Though this was not part of the task, I design the whole project for scalable ma
 ## Screen shots
 ![enter image description here](https://github.com/iamthejahid/poke_graphql/blob/main/media/Screenshot_1689100066.png)
 ![enter image description here](https://github.com/iamthejahid/poke_graphql/blob/main/media/Screenshot_1689100072.png)
+
+
+## Future scope
+
+- Adding pagination.
