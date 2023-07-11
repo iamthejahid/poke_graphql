@@ -1,16 +1,12 @@
+
 # poke_graphql
 
-A new Flutter project.
+
+  
 
 ## Getting Started
 
-This project is a starting point for a Flutter application.
+-   This project is built on a personal template and may contain some unnecessary files.
+-   It follows a "plug and play" approach, eliminating the need for any special environment setup. However, please note that the required SDK version is '>=3.0.0 <4.0.0'.
+-   Although a flavor was initially planned, it had to be removed due to time constraints.
 
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
