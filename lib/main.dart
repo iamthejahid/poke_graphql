@@ -52,7 +52,7 @@ Future<void> main() async {
     ..setToken(token);
 
   NetworkHandlerGraphQL.instance
-      .setup(baseUrl: 'httpss://graphql-pokemon2.vercel.app/');
+      .setup(baseUrl: 'https://graphql-pokemon2.vercel.app/');
 
   Logger.d('token: $token');
   runApp(

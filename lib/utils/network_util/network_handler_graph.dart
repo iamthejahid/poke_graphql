@@ -1,5 +1,8 @@
 // ignore_for_file: no_leading_underscores_for_local_identifiers, unused_field
 
+import 'dart:convert';
+
+import 'package:flutter/services.dart';
 import 'package:flutter_easylogger/flutter_logger.dart';
 import 'package:fpdart/fpdart.dart';
 import 'package:graphql/client.dart';
@@ -21,18 +24,20 @@ class NetworkHandlerGraphQL {
       {required String baseUrl,
       bool showLogs = false,
       bool enableDialogue = true}) {
-    client = GraphQLClient(
-      link: HttpLink(baseUrl),
-      cache: GraphQLCache(),
-    );
+    final HttpLink httpLink = HttpLink(baseUrl);
+    final Link link = httpLink;
+
+    Future.microtask(() => client = GraphQLClient(
+          link: link,
+          cache: GraphQLCache(),
+        ));
     _baseUrl = baseUrl;
     _showLogs = showLogs;
     _enableDialogue = enableDialogue;
   }
 
-  Future<Either<CleanFailure, T>> get<T>({
+  Future<Either<CleanFailure, QueryResult>> get({
     required String query,
-    required T Function(Map<String, dynamic> data) fromData,
   }) async {
     try {
       // final response = await client.get(
@@ -44,11 +49,27 @@ class NetworkHandlerGraphQL {
         document: gql(query),
       ));
 
-      return handleResponse<T>(
+      if (result.hasException) {
+        return left(
+          CleanFailure.withData(
+            statusCode: -1,
+            enableDialogue: _enableDialogue,
+            tag: query,
+            method: 'GET',
+            url: _baseUrl,
+            // header: _header,
+            header: const {},
+
+            body: const {},
+            error: result.exception.toString(),
+          ),
+        );
+      }
+
+      return handleResponse(
         query: query,
-        response: result,
+        result: result,
         // endPoint: query,
-        fromData: fromData,
       );
     } catch (e) {
       Logger.e("1st catch Error: $e");
@@ -69,25 +90,24 @@ class NetworkHandlerGraphQL {
     }
   }
 
-  Either<CleanFailure, T> handleResponse<T>({
-    required QueryResult response,
+  Either<CleanFailure, QueryResult> handleResponse({
+    required QueryResult result,
     required String query,
-    required T Function(Map<String, dynamic> data) fromData,
   }) {
-    // Logger.v("request: ${response.request}");
-    Logger.json(response.data.toString());
+    // Logger.v("request: ${result.request}");
+    Logger.json(jsonEncode(result.data));
 
-    final Map<String, dynamic>? _regResponse = response.data;
+    final Map<String, dynamic>? _regResponse = result.data;
 
     try {
-      final T _typedResponse = fromData(_regResponse!);
-      Logger.i("parsed data: $_typedResponse");
-      return right(_typedResponse);
+      // final T _typedResponse = fromData(_regResponse!);
+      // Logger.i("parsed data: $_typedResponse");
+      return right(result);
     } catch (e) {
       // Logger.w("header: ${response.request?.headers}");
       // Logger.w("request: ${response.request}");
 
-      Logger.w("body: ${response.data}");
+      Logger.w("body: ${result.data}");
       // Logger.w("status code: ${response.statusCode}");
       Logger.w("error: $e");
       return left(

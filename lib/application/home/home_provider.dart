@@ -6,7 +6,7 @@ import '../global.dart';
 import 'home_state.dart';
 
 final homeProvider = StateNotifierProvider<HomeNotifier, HomeState>((ref) {
-  return HomeNotifier(HomeRepo(), ref);
+  return HomeNotifier(HomeRepo(), ref)..getHomeData();
 }, name: "homeProvider");
 
 class HomeNotifier extends StateNotifier<HomeState> {
@@ -29,7 +29,7 @@ class HomeNotifier extends StateNotifier<HomeState> {
         ref.watch(snackBarProvider(l.error));
         return state = state.copyWith(failure: l, loading: false);
       },
-      (r) => state = state.copyWith(homeData: r.data, loading: false),
+      (r) => state = state.copyWith(pokemonDataRes: r, loading: false),
     );
   }
 }
