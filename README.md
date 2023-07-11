@@ -3,7 +3,14 @@
 
 ### Project Details:
 
+
 Project Description: The aim of this project is to develop a Flutter application that allows users to perform read operations on a Pokémon list. The application will utilize a mock GraphQL API to interact with the backend and retrieve Pokémon data.
+
+### Pre Setup 
+
+For the very first time '''flutter gen-l10n''' input this in terminal and hit enter to generate localization related classes.
+Though this was not part of the task, I design the whole project for scalable manner.
+
 
 ### Task Requirements:
 
