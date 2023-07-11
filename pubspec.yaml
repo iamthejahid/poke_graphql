@@ -65,6 +65,7 @@ dependencies:
   flutter_localizations:
     sdk: flutter
   flutter_animate: ^4.2.0
+  dart_code_metrics: ^5.7.5
 
 dev_dependencies:
   flutter_test:
