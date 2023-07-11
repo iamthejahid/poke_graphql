@@ -2,10 +2,12 @@ import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../../application/home/home_provider.dart';
 import '../../utils/utils.dart';
+import '../pokemon_details/pokemon_details_screen.dart';
 
 class HomeScreen extends HookConsumerWidget {
   static String route = "/home";
@@ -25,7 +27,6 @@ class HomeScreen extends HookConsumerWidget {
       if (previous.loading == true && next.loading == false) {
         BotToast.closeAllLoading();
       }
-      print("length ==> ${state.pokemonDataRes.pokemons?.length}");
     });
 
     useEffect(() {
@@ -59,6 +60,8 @@ class HomeScreen extends HookConsumerWidget {
                 itemBuilder: (BuildContext context, int index) {
                   final pokemon = state.pokemonDataRes.pokemons![index];
                   return ListTile(
+                      onTap: () => context.pushNamed(PokemonDetailsScreen.route,
+                          extra: state.pokemonDataRes.pokemons![index]),
                       title: Text(pokemon.name!),
                       subtitle: Text(pokemon.classification!),
                       leading: Image.network(pokemon.image!),

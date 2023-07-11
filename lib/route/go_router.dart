@@ -2,6 +2,8 @@ import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:poke_graphql/domain/home/model/pokemon.dart';
+import 'package:poke_graphql/presentation/pokemon_details/pokemon_details_screen.dart';
 
 import '../presentation/home/home_screen.dart';
 
@@ -73,9 +75,18 @@ class RouterNotifier extends ChangeNotifier {
           builder: (context, state) => const SplashScreen(),
         ),
         GoRoute(
-          path: HomeScreen.route,
-          builder: (context, state) => const HomeScreen(),
-        ),
+            path: HomeScreen.route,
+            builder: (context, state) => const HomeScreen(),
+            routes: [
+              GoRoute(
+                path: PokemonDetailsScreen.route,
+                name: PokemonDetailsScreen.route,
+                builder: (context, state) {
+                  Pokemon pokemon = state.extra as Pokemon;
+                  return PokemonDetailsScreen(pokemon: pokemon);
+                },
+              ),
+            ]),
       ];
   Page<void> _errorPageBuilder(BuildContext context, GoRouterState state) =>
       MaterialPage(
