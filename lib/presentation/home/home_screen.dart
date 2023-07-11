@@ -4,7 +4,6 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-import '../../application/auth/auth_provider.dart';
 import '../../application/home/home_provider.dart';
 import '../../utils/utils.dart';
 
@@ -15,10 +14,10 @@ class HomeScreen extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final scrollController = useScrollController();
     final state = ref.watch(homeProvider);
-    final authState = ref.watch(authProvider);
-    final searchController = useTextEditingController();
+    // final authState = ref.watch(authProvider);
+    // final searchController = useTextEditingController();
 
-    final isSelectedType = useState(0);
+    // final isSelectedType = useState(0);
     ref.listen(homeProvider, (previous, next) {
       if (previous!.loading == false && next.loading) {
         BotToast.showLoading();
@@ -63,7 +62,8 @@ class HomeScreen extends HookConsumerWidget {
             children: [
               Center(
                 child: Text(
-                  context.local.welcomeHome(authState.user.name),
+                  // context.local.welcomeHome(authState.user.name),
+                  "",
                   style: CustomTextStyle.textStyle16w600,
                 ),
               ),

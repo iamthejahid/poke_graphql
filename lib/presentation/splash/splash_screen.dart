@@ -1,18 +1,8 @@
-import 'dart:developer';
-
-import 'package:app_version_update/app_version_update.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_easylogger/flutter_logger.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
-import 'package:hive_flutter/adapters.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-
-import '../../application/auth/loggedin_provider.dart';
-import '../../utils/utils.dart';
-import '../auth/login/login.dart';
-import '../main_nav/main_nav.dart';
+import 'package:poke_graphql/presentation/home/home_screen.dart';
 
 class SplashScreen extends HookConsumerWidget {
   static const route = '/';
@@ -33,9 +23,8 @@ class SplashScreen extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, ref) {
-    final state = ref.watch(loggedInProvider);
-    final isOnboard = useState(false);
-    final isLoggedIn = useState(false);
+    // final isOnboard = useState(false);
+    // final isLoggedIn = useState(false);
     final hasUpdate = useState(false);
 
     Future<void> appVersionCheck() async {
@@ -69,19 +58,22 @@ class SplashScreen extends HookConsumerWidget {
                   // } else if (isOnboard.value && token.isNotEmpty == false) {
                   //   context.go(LoginScreen.route);
                   // }
-                  context.go(LoginScreen.route);
+                  context.go(HomeScreen.route);
                 });
               });
       });
       return null;
     }, []);
 
-    return Scaffold(
+    return const Scaffold(
       body: Center(
-        child: Image.asset(
-          Images.logo,
-          fit: BoxFit.cover,
-          width: 0.6.sw,
+        // child: Image.asset(
+        //   Images.logo,
+        //   fit: BoxFit.cover,
+        //   width: 0.6.sw,
+        // ),
+        child: Center(
+          child: CircularProgressIndicator(),
         ),
       ),
     );

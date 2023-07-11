@@ -1,21 +1,15 @@
 import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_easylogger/flutter_logger.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-import '../application/auth/loggedin_provider.dart';
-import '../presentation/auth/login/login.dart';
-import '../presentation/auth/reset_password/reset_password.dart';
-import '../presentation/auth/signup/signup.dart';
 import '../presentation/home/home_screen.dart';
-import '../presentation/main_nav/main_nav.dart';
-import '../presentation/profile/pages/change_password_screen.dart';
-import '../presentation/profile/pages/edit_profile/edit_profile_screen.dart';
+
 import '../presentation/splash/splash_screen.dart';
 
 final routerProvider = Provider<GoRouter>((ref) {
-  final router = RouterNotifier(ref);
+  // final router = RouterNotifier(ref);
+  final router = RouterNotifier();
 
   final listenable = ValueNotifier<bool>(true);
 
@@ -32,13 +26,14 @@ final routerProvider = Provider<GoRouter>((ref) {
 });
 
 class RouterNotifier extends ChangeNotifier {
-  final Ref _ref;
+  // final Ref _ref;
 
-  RouterNotifier(this._ref) {
-    _ref.listen<bool>(
-      loggedInProvider.select((value) => value.loggedIn),
-      (_, __) => notifyListeners(),
-    );
+  // RouterNotifier(this._ref) {
+  RouterNotifier() {
+    // _ref.listen<bool>(
+    //   loggedInProvider.select((value) => value.loggedIn),
+    //   (_, __) => notifyListeners(),
+    // );
     // _ref.listen<bool>(
     //   loggedInProvider.select((value) => value.onboarding),
     //   (_, __) => notifyListeners(),
@@ -46,28 +41,28 @@ class RouterNotifier extends ChangeNotifier {
   }
 
   String? _redirectLogic(BuildContext context, GoRouterState state) {
-    final token = _ref.watch(loggedInProvider.notifier).token;
-    final user = _ref.watch(loggedInProvider.notifier).user;
+    // final token = _ref.watch(loggedInProvider.notifier).token;
+    // final user = _ref.watch(loggedInProvider.notifier).user;
 
-    final isLoggedIn = _ref.watch(loggedInProvider).loggedIn; //bool
-    // final isOnboarding = _ref.watch(loggedInProvider).onboarding; //bool
+    // final isLoggedIn = _ref.watch(loggedInProvider).loggedIn; //bool
+    // // final isOnboarding = _ref.watch(loggedInProvider).onboarding; //bool
 
-    Logger.i('RouterNotifier: isLoggedIn - $isLoggedIn');
-    Logger.i('RouterNotifier:  $token, $user');
+    // Logger.i('RouterNotifier: isLoggedIn - $isLoggedIn');
+    // Logger.i('RouterNotifier:  $token, $user');
 
-    final areWeLoggingIn = state.location == LoginScreen.route;
-    final areWeRegistering = state.location == SignupScreen.route;
+    // final areWeLoggingIn = state.location == LoginScreen.route;
+    // final areWeRegistering = state.location == SignupScreen.route;
 
-    if (!isLoggedIn && areWeLoggingIn) {
-      return areWeLoggingIn ? null : LoginScreen.route;
-    }
-    if (!isLoggedIn && areWeRegistering) {
-      return areWeRegistering ? null : SignupScreen.route;
-    }
+    // if (!isLoggedIn && areWeLoggingIn) {
+    //   return areWeLoggingIn ? null : LoginScreen.route;
+    // }
+    // if (!isLoggedIn && areWeRegistering) {
+    //   return areWeRegistering ? null : SignupScreen.route;
+    // }
 
-    if (areWeLoggingIn || areWeRegistering) {
-      return MainNav.route;
-    }
+    // if (areWeLoggingIn || areWeRegistering) {
+    //   return MainNav.route;
+    // }
 
     return null;
   }
@@ -78,41 +73,8 @@ class RouterNotifier extends ChangeNotifier {
           builder: (context, state) => const SplashScreen(),
         ),
         GoRoute(
-          path: MainNav.route,
-          builder: (context, state) => const MainNav(),
-        ),
-        GoRoute(
           path: HomeScreen.route,
           builder: (context, state) => const HomeScreen(),
-        ),
-        GoRoute(
-          path: LoginScreen.route,
-          builder: (context, state) => LoginScreen(),
-        ),
-        GoRoute(
-          path: SignupScreen.route,
-          builder: (context, state) => const SignupScreen(),
-        ),
-        GoRoute(
-          path: ResetPasswordScreen.route,
-          pageBuilder: (context, state) => SlideBottomToTopTransitionPage(
-            key: state.pageKey,
-            child: const ResetPasswordScreen(),
-          ),
-        ),
-        GoRoute(
-          path: EditProfileScreen.route,
-          pageBuilder: (context, state) => SlideRightToLeftTransitionPage(
-            key: state.pageKey,
-            child: const EditProfileScreen(),
-          ),
-        ),
-        GoRoute(
-          path: ChangePasswordScreen.route,
-          pageBuilder: (context, state) => SlideRightToLeftTransitionPage(
-            key: state.pageKey,
-            child: const ChangePasswordScreen(),
-          ),
         ),
       ];
   Page<void> _errorPageBuilder(BuildContext context, GoRouterState state) =>

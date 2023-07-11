@@ -60,7 +60,7 @@ class NetworkHandlerGraphQL {
           method: 'GET',
           url: _baseUrl,
           // header: _header,
-          header: {},
+          header: const {},
 
           body: const {},
           error: e.toString(),
@@ -96,7 +96,7 @@ class NetworkHandlerGraphQL {
           url: query,
           // method: response.request?.method ?? "",
           method: "GET",
-          header: {},
+          header: const {},
           statusCode: -1,
           // header: response.request?.headers ?? {},
           body: _regResponse ?? {},
