@@ -33,5 +33,5 @@ Project Description: The aim of this project is to develop a Flutter application
 - Due to time constraints, the minimum UI design was implemented.
 
 ## Screen shots
-![enter image description here](../poke_graphql/main/media/Screenshot_1689100066.png)
-![enter image description here](../poke_graphql/blob/main/media/Screenshot_1689100072.png)
+![enter image description here](https://github.com/iamthejahid/poke_graphql/blob/main/media/Screenshot_1689100066.png)
+![enter image description here](https://github.com/iamthejahid/poke_graphql/blob/main/media/Screenshot_1689100072.png)
