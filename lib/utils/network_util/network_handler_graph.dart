@@ -2,7 +2,6 @@
 
 import 'dart:convert';
 
-import 'package:flutter/services.dart';
 import 'package:flutter_easylogger/flutter_logger.dart';
 import 'package:fpdart/fpdart.dart';
 import 'package:graphql/client.dart';

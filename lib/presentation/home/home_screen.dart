@@ -58,7 +58,6 @@ class HomeScreen extends HookConsumerWidget {
                 itemCount: state.pokemonDataRes.pokemons?.length ?? 0,
                 itemBuilder: (BuildContext context, int index) {
                   final pokemon = state.pokemonDataRes.pokemons![index];
-
                   return ListTile(
                       title: Text(pokemon.name!),
                       subtitle: Text(pokemon.classification!),
