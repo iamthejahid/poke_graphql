@@ -20,6 +20,7 @@ import 'utils/api_routes.dart';
 import 'theme/theme.dart';
 
 import '../../utils/utils.dart';
+import 'utils/network_util/network_handler_graph.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -53,6 +54,9 @@ Future<void> main() async {
   NetworkHandler.instance
     ..setup(baseUrl: APIRoute.BASE_URL, showLogs: false)
     ..setToken(token);
+
+  NetworkHandlerGraphQL.instance
+      .setup(baseUrl: 'httpss://graphql-pokemon2.vercel.app/');
 
   Logger.d('token: $token');
   runApp(
