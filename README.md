@@ -8,7 +8,7 @@ Project Description: The aim of this project is to develop a Flutter application
 
 ### Pre Setup 
 
-For the very first time '''flutter gen-l10n''' input this in terminal and hit enter to generate localization related classes.
+For the very first time ```flutter gen-l10n``` input this in terminal and hit enter to generate localization related classes.
 Though this was not part of the task, I design the whole project for scalable manner.
 
 
