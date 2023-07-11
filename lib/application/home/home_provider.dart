@@ -1,16 +1,12 @@
-import 'package:bot_toast/bot_toast.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_easylogger/flutter_logger.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../../infrastructure/home_repo.dart';
-import '../../presentation/notification/notification_screen.dart';
-import '../../route/go_router.dart';
 import '../global.dart';
 import 'home_state.dart';
 
 final homeProvider = StateNotifierProvider<HomeNotifier, HomeState>((ref) {
-  return HomeNotifier(HomeRepo(), ref);
+  return HomeNotifier(HomeRepo(), ref)..getHomeData();
 }, name: "homeProvider");
 
 class HomeNotifier extends StateNotifier<HomeState> {
@@ -33,7 +29,7 @@ class HomeNotifier extends StateNotifier<HomeState> {
         ref.watch(snackBarProvider(l.error));
         return state = state.copyWith(failure: l, loading: false);
       },
-      (r) => state = state.copyWith(homeData: r.data, loading: false),
+      (r) => state = state.copyWith(pokemonDataRes: r, loading: false),
     );
   }
 }

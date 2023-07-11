@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import '../../utils/ui_constant.dart';
 import '../../utils/utils.dart';
 
 class KDivider extends StatelessWidget {

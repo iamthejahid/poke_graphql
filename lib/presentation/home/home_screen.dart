@@ -2,11 +2,12 @@ import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-import '../../application/auth/auth_provider.dart';
 import '../../application/home/home_provider.dart';
 import '../../utils/utils.dart';
+import '../pokemon_details/pokemon_details_screen.dart';
 
 class HomeScreen extends HookConsumerWidget {
   static String route = "/home";
@@ -15,10 +16,10 @@ class HomeScreen extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final scrollController = useScrollController();
     final state = ref.watch(homeProvider);
-    final authState = ref.watch(authProvider);
-    final searchController = useTextEditingController();
+    // final authState = ref.watch(authProvider);
+    // final searchController = useTextEditingController();
 
-    final isSelectedType = useState(0);
+    // final isSelectedType = useState(0);
     ref.listen(homeProvider, (previous, next) {
       if (previous!.loading == false && next.loading) {
         BotToast.showLoading();
@@ -43,33 +44,36 @@ class HomeScreen extends HookConsumerWidget {
       appBar: AppBar(
         title: Text(context.local.home),
         centerTitle: false,
-        actions: [
-          IconButton(
-            onPressed: () {},
-            icon: Badge(
-              isLabelVisible: state.notification,
-              child: const Icon(Icons.notifications_outlined),
-            ),
-          )
-        ],
+        actions: const [],
       ),
       body: SizedBox(
         height: 1.sh,
         width: 1.sw,
-        child: SingleChildScrollView(
-          controller: scrollController,
-          child: Column(
-            crossAxisAlignment: crossStart,
-            children: [
-              Center(
-                child: Text(
-                  context.local.welcomeHome(authState.user.name),
-                  style: CustomTextStyle.textStyle16w600,
-                ),
+        child: state.loading
+            ? const Center(
+                child: Text("Loading..."),
+              )
+            : ListView.builder(
+                controller: scrollController,
+                shrinkWrap: true,
+                itemCount: state.pokemonDataRes.pokemons?.length ?? 0,
+                itemBuilder: (BuildContext context, int index) {
+                  final pokemon = state.pokemonDataRes.pokemons![index];
+                  return ListTile(
+                      onTap: () => context.pushNamed(PokemonDetailsScreen.route,
+                          extra: state.pokemonDataRes.pokemons![index]),
+                      title: Text(pokemon.name!),
+                      subtitle: Text(pokemon.classification!),
+                      leading: Image.network(pokemon.image!),
+                      trailing: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.end,
+                          children: [
+                            Text('Weight: ${pokemon.weight!.maximum!}'),
+                            Text('Height: ${pokemon.height!.maximum!}'),
+                          ]));
+                },
               ),
-            ],
-          ),
-        ),
       ),
     );
   }

@@ -3,7 +3,7 @@
 import 'dart:developer';
 
 import 'package:bot_toast/bot_toast.dart';
-import 'package:flex_color_scheme/flex_color_scheme.dart';
+// import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easylogger/flutter_logger.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
@@ -11,15 +11,12 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-import 'application/auth/loggedin_provider.dart';
 import 'application/local_storage/storage_handler.dart';
-import 'application/auth/auth_provider.dart';
 import 'application/global.dart';
 import 'route/go_router.dart';
-import 'utils/api_routes.dart';
-import 'theme/theme.dart';
 
 import '../../utils/utils.dart';
+import 'utils/network_util/network_handler_graph.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -48,13 +45,16 @@ Future<void> main() async {
 
   container.read(themeProvider);
 
-  final String token = box.get(KStrings.token, defaultValue: '');
+  // final String token = box.get(KStrings.token, defaultValue: '');
 
-  NetworkHandler.instance
-    ..setup(baseUrl: APIRoute.BASE_URL, showLogs: false)
-    ..setToken(token);
+  // NetworkHandler.instance
+  //   ..setup(baseUrl: APIRoute.BASE_URL, showLogs: false)
+  //   ..setToken(token);
 
-  Logger.d('token: $token');
+  NetworkHandlerGraphQL.instance
+      .setup(baseUrl: 'https://graphql-pokemon2.vercel.app/');
+
+  // Logger.d('token: $token');
   runApp(
     ProviderScope(
       parent: container,
@@ -71,13 +71,13 @@ class MyApp extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final router = ref.watch(routerProvider);
     final appTheme = ref.watch(themeProvider);
-    final user = ref.watch(loggedInProvider.notifier).user;
+    // final user = ref.watch(loggedInProvider.notifier).user;
 
     useEffect(() {
       Future.wait([
-        Future.microtask(
-          () => ref.read(authProvider.notifier).setUser(user),
-        ),
+        // Future.microtask(
+        //   () => ref.read(authProvider.notifier).setUser(user),
+        // ),
         // Future.microtask(
         //     () => ref.read(loggedInProvider.notifier).onAppStart()),
         // Future.microtask(

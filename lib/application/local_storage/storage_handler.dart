@@ -1,3 +1,5 @@
+// ignore_for_file: unused_element
+
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import '../../utils/strings.dart';

@@ -1,21 +1,34 @@
 import 'dart:convert';
 
 import 'package:flutter_easylogger/flutter_logger.dart';
+import 'package:poke_graphql/domain/home/pokemon_data_res.dart';
+import 'package:poke_graphql/utils/network_util/network_handler_graph.dart';
 
 import '../../utils/network_util/network_handler.dart';
 
-import '../domain/home/home_response.dart';
-import '../utils/api_routes.dart';
-
 class HomeRepo {
-  final api = NetworkHandler.instance;
+  final api = NetworkHandlerGraphQL.instance;
 
-  Future<Either<CleanFailure, HomeResponse>> getHomeDate() async {
+  Future<Either<CleanFailure, PokemonDataRes>> getHomeDate() async {
     final data = await api.get(
-      fromData: (json) => HomeResponse.fromMap(json),
-      endPoint: APIRoute.HOME,
-      withToken: false,
-    );
+        // endPoint: APIRoute.HOME,
+        // withToken: false,
+        query: '''
+      query GetAllPokemon {
+        pokemons(first: 20) {
+          id
+          name
+          weight {
+            maximum
+          }
+          height {
+            maximum
+          }
+          image
+          classification
+        }
+      }
+      ''');
 
     Logger.v("data: $data");
 
@@ -23,6 +36,9 @@ class HomeRepo {
       final error = jsonDecode(l.error);
       final failure = l.copyWith(error: error['error']);
       return left(failure);
-    }, (r) => right(r));
+    }, (r) {
+      Logger.e(r.data);
+      return right(PokemonDataRes.fromJson(r.data!));
+    });
   }
 }
